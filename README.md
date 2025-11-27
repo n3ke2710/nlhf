@@ -1,3 +1,14 @@
+# TL;DR
+
+**NLHF** — это фреймворк для обучения языковых моделей с помощью Nash Learning from Human Feedback (NLHF), позволяющий генерировать качественные TL;DR-суммаризации для Reddit-постов и других текстов на основе человеческих предпочтений и теории игр.
+
+- 📌 Быстрый старт: обучение, генерация и оценка TL;DR для реальных постов.
+- 🚀 Поддержка запуска на GPU (A100 40GB рекомендуется).
+- 📊 Визуализация качества и анализ Nash-равновесия.
+- 📝 Пример вывода TL;DR: см. файл `sample_generations.txt` в корне репозитория.
+
+---
+
 # NLHF: Nash Learning from Human Feedback
 
 Implementation of the **Nash Learning from Human Feedback** algorithm for training language models based on game theory and human preferences.
