@@ -17,37 +17,49 @@ Implementation of the **Nash Learning from Human Feedback** algorithm for traini
 
 NLHF is a novel approach to training language models with human preferences, based on the concept of Nash equilibrium from game theory. Unlike traditional RLHF (Reinforcement Learning from Human Feedback), NLHF creates a distribution of policies and trains a reward model with KL-divergence regularization.
 
-## 🗂️ Repository Structure
+nlhf/
+## 🗂️ Структура репозитория
 
 ```
 nlhf/
-├── experiment/                  # Main experiment
-│   ├── nlhf_learning.ipynb     # Jupyter notebook with full pipeline (23 cells)
-│   ├── requirements.txt         # Dependencies for Python 3.10+
-│   ├── README.md               # Complete installation and running guide
-│   ├── QUICKSTART.md           # Cheat sheet with commands for typical scenarios
-│   ├── FAQ.md                  # Frequently asked questions and solutions
-│   └── .gitignore              # Git ignore for large files
-└── README.md                    # This file
+├── experiment/
+│   ├── v1/                # Старый pipeline: ноутбук, гайды, примеры
+│   │   ├── nlhf_learning.ipynb   # Jupyter notebook: полный pipeline (23+ cells)
+│   │   ├── README.md, QUICKSTART.md, FAQ.md
+│   │   └── ...
+│   └── v2/
+│       └── nlhf/          # Модульная реализация NLHF (рекомендуется)
+│           ├── config.py      # Конфигурация экспериментов
+│           ├── data/         # Загрузка и препроцессинг датасетов
+│           ├── logger.py     # Логирование
+│           ├── ...           # (models/, training/, evaluation/, utils/ — структура под расширение)
+└── README.md                # Этот файл
 ```
+
+git clone https://github.com/buttercutter/nlhf.git
 
 ## 🚀 Быстрый старт
 
 ```bash
 # Клонирование репозитория
 git clone https://github.com/buttercutter/nlhf.git
-cd nlhf/experiment
+cd nlhf/experiment/v2
 
 # Установка зависимостей (Python 3.10+)
 python3.10 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -r ../v1/requirements.txt
 
-# Запуск эксперимента
+# Запуск экспериментов (v2)
+# (пример: запуск скриптов или модулей из nlhf/)
+# python -m nlhf.<module> ...
+
+# Для интерактивного эксперимента (v1):
+cd ../v1
 jupyter notebook nlhf_learning.ipynb
 ```
 
-**Полная документация**: см. [experiment/README.md](experiment/README.md)
+**Документация по v2**: в процессе. Для ознакомления с принципами работы используйте [experiment/v1/README.md](experiment/v1/README.md)
 
 ## 📋 Требования
 
@@ -64,12 +76,14 @@ jupyter notebook nlhf_learning.ipynb
 - ✅ **Визуализация**: Анализ Nash равновесия и качества генерации
 - ✅ **Загрузка готовых моделей**: Возможность пропустить обучение
 
+
 ## 📚 Документация
 
-- 📖 **[experiment/README.md](experiment/README.md)** - полное руководство по установке и запуску
-- ⚡ **[experiment/QUICKSTART.md](experiment/QUICKSTART.md)** - команды для быстрого старта
-- ❓ **[experiment/FAQ.md](experiment/FAQ.md)** - часто задаваемые вопросы
-- 📓 **[experiment/nlhf_learning.ipynb](experiment/nlhf_learning.ipynb)** - интерактивный эксперимент
+- 📖 **[experiment/v1/README.md](experiment/v1/README.md)** — полное руководство по установке и запуску (v1)
+- ⚡ **[experiment/v1/QUICKSTART.md](experiment/v1/QUICKSTART.md)** — команды для быстрого старта (v1)
+- ❓ **[experiment/v1/FAQ.md](experiment/v1/FAQ.md)** — часто задаваемые вопросы (v1)
+- 📓 **[experiment/v1/nlhf_learning.ipynb](experiment/v1/nlhf_learning.ipynb)** — интерактивный эксперимент (v1)
+- 🛠️ **experiment/v2/nlhf/** — модульная реализация NLHF (см. docstring и структуру модулей)
 
 ## 🤝 Участие в разработке
 
