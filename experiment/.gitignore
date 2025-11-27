@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# Large model files and checkpoints
+qwen2.5-3b-tldr-lora/
+qwen2.5-*.lora/
+policies/
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Logs
+logs/
+*.log
+
+# Generated outputs
+visualizations/
+sample_generations*.txt
+*.png
+*.pdf
+
+# Cache and temp files
+.cache/
+*.tmp
+.DS_Store
+.vscode/
+.idea/
+
+# HuggingFace cache
+.huggingface/
+transformers_cache/

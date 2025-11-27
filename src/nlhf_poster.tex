@@ -1,0 +1,320 @@
+\documentclass[a1paper,portrait,20pt]{tikzposter}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% Use Latin Modern fonts to avoid missing font shapes warnings
+\usepackage{lmodern}
+% Improve font rendering and protrusion
+\usepackage[final]{microtype}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+
+\definecolor{MainBlue}{HTML}{0077B6}
+\definecolor{DarkBlue}{HTML}{023E8A}
+
+\definebackgroundstyle{CleanWhite}{
+    \fill[white] (bottomleft) rectangle (topright);
+}
+
+\defineblockstyle{MinimalBlock}{
+    titlewidthscale=1.0,
+    bodywidthscale=1.0,
+    titleleft,
+    titleoffsetx=0pt,
+    titleoffsety=0pt,
+    bodyoffsetx=0pt,
+    bodyoffsety=0pt,
+    bodyverticalshift=0pt,
+    roundedcorners=0,
+    linewidth=0pt,
+    titleinnersep=2pt,
+    bodyinnersep=5pt
+}{
+    \fill[white] (blockbody.south west) rectangle (blockbody.north east);
+    \ifBlockHasTitle
+        \fill[white] (blocktitle.south west) rectangle (blocktitle.north east);
+        \draw[MainBlue, line width=2pt] (blocktitle.south west) -- (blocktitle.south east);
+    \fi
+}
+
+\definetitlestyle{MinimalTitle}{
+    width=0.9\paperwidth,
+    roundedcorners=0,
+    linewidth=0pt,
+    innersep=5pt,
+    titletotopverticalspace=5pt,
+    titletoblockverticalspace=15pt
+}{
+    \fill[white] (\titleposleft,\titleposbottom) rectangle (\titleposright,\titlepostop);
+    \draw[MainBlue, line width=3pt] (\titleposleft,\titleposbottom) -- (\titleposright,\titleposbottom);
+}
+
+% Custom title with logos stacked on left, title on right
+\makeatletter
+\renewcommand\TP@maketitle{%
+    \noindent
+    \parbox{8cm}{%
+        \centering
+        \IfFileExists{figures/logo.png}{%
+            \includegraphics[height=5.25cm,width=7.5cm,keepaspectratio]{figures/logo.png}%
+        }{%
+            \fcolorbox{MainBlue}{white}{\parbox{5cm}{\centering\vspace{1cm}\textcolor{gray}{LOGO 1}\vspace{1cm}}}%
+        }
+        \IfFileExists{figures/logo2.png}{%
+            \includegraphics[height=5.25cm,width=7.5cm,keepaspectratio]{figures/logo2.png}%
+        }{%
+            \fcolorbox{MainBlue}{white}{\parbox{5cm}{\centering\vspace{1cm}\textcolor{gray}{LOGO 2}\vspace{1cm}}}%
+        }
+    }\hfill
+    \parbox{0.8\linewidth}{%
+        \raggedleft
+        {\bfseries\fontsize{50}{50}\selectfont\color{titlefgcolor}\@title\par}
+        \vspace{0.5em}
+        {\fontsize{32}{38}\selectfont\@author\par}
+        \vspace{0.3em}
+        {\fontsize{26}{32}\selectfont\@institute}
+    }%
+}
+\makeatother
+
+\usetheme{Default}
+\usebackgroundstyle{CleanWhite}
+\useblockstyle{MinimalBlock}
+\usetitlestyle{MinimalTitle}
+\tikzposterlatexaffectionproofoff
+
+% Make block titles smaller
+\makeatletter
+\def\TP@blocktitlefont{\Large\bfseries}
+\makeatother
+
+\colorlet{titlefgcolor}{DarkBlue}
+\colorlet{blocktitlefgcolor}{DarkBlue}
+\colorlet{blockbodyfgcolor}{black}
+
+% Pale blue color for theory blocks
+\definecolor{TheoryBlue}{HTML}{BBDEFB}
+
+% Define a block style for theoretical content: single rounded rectangle for title+body
+\defineblockstyle{TheoryBlock}{
+    titlewidthscale=1.0,
+    bodywidthscale=1.0,
+    titleleft,
+    titleoffsetx=0pt,
+    titleoffsety=0pt,
+    bodyoffsetx=0pt,
+    bodyoffsety=0pt,
+    bodyverticalshift=0pt,
+    roundedcorners=10,
+    linewidth=0pt,
+    titleinnersep=5pt,
+    bodyinnersep=10pt
+}{
+    % Single rounded rectangle covering both title and body
+    \ifBlockHasTitle
+        \filldraw[rounded corners=10pt, fill=TheoryBlue, fill opacity=0.45, draw=MainBlue!70, line width=2pt]
+            (blockbody.south west) rectangle (blocktitle.north east);
+        % Underline under title to separate it from body
+        \draw[MainBlue!80, line width=1.5pt]
+            (blocktitle.south west) -- (blocktitle.south east);
+    \else
+        \filldraw[rounded corners=10pt, fill=TheoryBlue, fill opacity=0.45, draw=MainBlue!70, line width=2pt]
+            (blockbody.south west) rectangle (blockbody.north east);
+    \fi
+}
+
+% Convenience macro to use the theory block style for specific blocks
+% Must restore MinimalBlock after use to prevent style leakage
+\newcommand{\theoryblock}[2]{%
+    \useblockstyle{TheoryBlock}%
+    \block{#1}{#2}%
+    \useblockstyle{MinimalBlock}%
+}
+
+% Define a block style with negative vertical shift to overlap with previous block
+\defineblockstyle{OverlapBlock}{
+    titlewidthscale=1.0,
+    bodywidthscale=1.0,
+    titleleft,
+    titleoffsetx=0pt,
+    titleoffsety=0pt,
+    bodyoffsetx=0pt,
+    bodyoffsety=-6cm,
+    bodyverticalshift=-6cm,
+    roundedcorners=0,
+    linewidth=0pt,
+    titleinnersep=2pt,
+    bodyinnersep=5pt
+}{
+    \fill[white] (blockbody.south west) rectangle (blockbody.north east);
+    \ifBlockHasTitle
+        \fill[white] (blocktitle.south west) rectangle (blocktitle.north east);
+        \draw[MainBlue, line width=2pt] (blocktitle.south west) -- (blocktitle.south east);
+    \fi
+}
+
+\title{\textbf{Prisoner's Dilemma Generalizations \& NLHF}}
+\author{Nikolai Vinogradov, Arsenii Burzilov, Ignashin Igor, Krylov Alexey}
+\institute{MIPT}
+
+\begin{document}
+\maketitle
+
+\begin{columns}
+\column{0.50}
+
+\block{Game Model (Prisoner's Dilemma)}{
+\textit{Classic game where 2 players choose to cooperate or defect.}
+
+Each agent action: $a\in[0,1]$ (cooperation degree).
+
+\textcolor{MainBlue}{\textbf{Payoff:}} $T$=temptation, $R$=reward, $P$=punishment, $S$=sucker
+
+$R(a_i,a_j)=R a_i a_j + T(1-a_i)a_j + S a_i(1-a_j) + P(1-a_i)(1-a_j)$
+}
+
+\theoryblock{SARSA + Boltzmann Policy}{
+\textit{SARSA: on-policy RL algorithm learning Q-values from $(s,a,r,s',a')$ tuples.}
+
+\textcolor{MainBlue}{\textbf{Q-function:}} expected cumulative reward for action $a$ in state $s$
+
+$Q(s_t,a_t) \leftarrow Q + \alpha(r_t + \gamma Q(s_{t+1},a_{t+1}) - Q)$
+
+\textcolor{MainBlue}{\textbf{Boltzmann:}} soft action selection ($\beta$=inverse temperature)
+
+$\pi(a)=\frac{e^{\beta Q(a)}}{\sum_{a'} e^{\beta Q(a')}}$
+}
+
+\theoryblock{Stationary Distribution}{
+\textit{$\gamma$: discount factor (future reward weight), $\alpha$: learning rate}
+
+At convergence: $\pi^*(a) = \frac{e^{\beta Q^*(a)}}{\sum_{a'} e^{\beta Q^*(a')}}$
+
+Bellman equation: $Q^*(a) = \mathbb{E}[r(a,a') + \gamma Q^*(a')]$
+
+\textbf{Key:} $\pi^*(a)$ independent of $\gamma$, only convergence speed varies. Also we could say that about Q-learning with argmax.
+}
+
+\block{SARSA: Two-Player Results}{
+Graphic for $R$ = 3, $T$ = 5, $P$ = 0, $S$ = 1, $\beta$ = 2.0, $\gamma$ = 0.6, steps = 2M
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{beta2.0_gamma0.6.png}
+\end{center}
+}
+
+\block{Q-Learning \& Results: Multi-Player (N=5)}{
+\textit{High $\beta$: escaping strategic trap causes oscillations.}
+
+\begin{center}
+\includegraphics[width=0.60\linewidth]{multiplayer_oscillations.jpg}
+\end{center}
+
+\vspace{-0.5cm}
+
+\textcolor{MainBlue}{\textbf{Continuous \& Multi-Player Extensions:}}
+Continuous action space $[0,1]$ enables agents to learn nuanced mixed strategies rather than pure cooperate/defect. Multi-player games (N=5) exhibit complex phase-shifted oscillations between cooperation and defection states. Strategic trap: agents initially cooperate but eventually discover defection yields higher payoff, triggering collective shift. Oscillation mechanism: when all defect, payoffs drop; some agents rediscover cooperation, restarting the cycle.
+
+\textcolor{MainBlue}{\textbf{Key Findings:}}
+Higher $\beta$ (lower temperature) leads to sharper policy distributions and faster convergence toward defection equilibrium. Discount factor $\gamma$ affects convergence speed but not the final stationary equilibrium distribution.
+}
+
+
+\column{0.50}
+
+\theoryblock{NLHF: Reward Model with KL Regularization}{
+\textit{Train reward model from preferences with regularization to reference policy $\pi_0$.}
+
+\textcolor{MainBlue}{\textbf{Bradley-Terry preference model:}} 
+$P(y_w \succ y_l | x) = \sigma(r_\theta(x, y_w) - r_\theta(x, y_l))$
+
+where $\sigma$ is the sigmoid function, $r_\theta$ is the learned reward model
+
+\textcolor{MainBlue}{\textbf{NLHF Loss with KL regularization:}} \\
+$\mathcal{L} = -\log\sigma\left(r_w - r_l + \tau \cdot \left(\log\pi_0(y_w|x) - \log\pi_0(y_l|x)\right)\right)$
+
+where $r_w$, $r_l$ = rewards for chosen/rejected, $\tau$=KL weight
+
+\textcolor{MainBlue}{\textbf{KL penalty prevents reward hacking:}} 
+$D_{KL}(\pi \| \pi_0) = \mathbb{E}_{y \sim \pi}\left[\log\frac{\pi(y|x)}{\pi_0(y|x)}\right]$
+
+Regularization term anchors learned rewards to base model preferences, preventing over-optimization
+}
+
+\block{NLHF: Implementation Pipeline}{
+\textit{SFT: Supervised Fine-Tuning. LoRA: Low-Rank Adaptation.}
+
+\textcolor{MainBlue}{\textbf{Steps:}}
+\begin{enumerate}[leftmargin=1em,itemsep=0pt]
+\item SFT on TL;DR dataset (15k samples, 3 epochs)
+\item Create $N$=5 diverse policies via weight perturbation
+\item Generate 100 summaries/policy (batched, validated)
+\item Form preference pairs: heuristic scoring or human labels
+\item Compute reference log-probs $\log\pi_0(y)$ for KL term
+\item Train Reward Model (LoRA r=8) with NLHF loss
+\end{enumerate}
+
+\textcolor{MainBlue}{\textbf{Model:}} Qwen2.5-3B-Instruct, LoRA, $\tau$=0.1, lr=2e-5
+}
+
+\block{NLHF: Quality \& Results}{
+\textcolor{MainBlue}{\textbf{Generation quality controls:}}
+\begin{itemize}[leftmargin=1em,itemsep=0pt]
+\item Multi-factor scoring: length, coherence, diversity
+\item Garbage detection: repetition, non-printable chars
+\item Validation with retry (2 attempts per prompt)
+\item Batched inference with gradient checkpointing
+\end{itemize}
+
+\textcolor{MainBlue}{\textbf{Data options:}}
+\begin{itemize}[leftmargin=1em,itemsep=0pt]
+\item Synthetic pairs (heuristic): accuracy $\sim$60\%
+\item OpenAI human feedback: accuracy $\sim$80\%
+\end{itemize}
+
+\textcolor{MainBlue}{\textbf{Memory optimizations:}}
+Sequential forward passes, reduced batch size (2), gradient accumulation (32)
+}
+
+\block{NLHF: Training Results}{
+\textcolor{MainBlue}{\textbf{Reward Distribution Analysis:}} Mean reward = 0.331, diverse responses per prompt
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{sample_rewards_distribution.png}
+\end{center}
+}
+
+\theoryblock{Future Work: Nash-MD \& Game Theory}{
+\textit{Current: Reward Model training. Next: Multi-agent equilibrium learning.}
+
+\begin{wrapfigure}{r}{6.5cm}
+\vspace{-1em}
+\centering
+\includegraphics[width=6cm]{qr-code-3.png}
+\vspace{-0.5em}
+{\small \textit{GitHub Repository}}
+\vspace{-1em}
+\end{wrapfigure}
+
+\textcolor{MainBlue}{\textbf{Nash-MD (Mirror Descent):}} iteratively update policy toward Nash equilibrium
+
+$\pi_{t+1} = \arg\max_\pi \left[\eta P(\pi \succ \pi_t^\mu) - \text{KL}(\pi \| \pi_t^\mu)\right]$
+
+where $\pi_t^\mu = (1-\eta\tau)\pi_t + \eta\tau\mu$ (mixture with reference $\mu$)
+
+\textcolor{MainBlue}{\textbf{Nash equilibrium:}} no player benefits from unilateral deviation
+
+$\mathbb{E}_{y\sim\pi^*}[P(y \succ y')] \geq \frac{1}{2}, \forall \pi'$
+
+\textcolor{MainBlue}{\textbf{Convergence guarantee:}} $O(\log T/\sqrt{T})$ to approximate Nash
+
+\textcolor{MainBlue}{\textbf{Open questions:}} Multi-player dynamics, stability analysis
+}
+
+\end{columns}
+
+\end{document}
