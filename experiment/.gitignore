@@ -32,7 +32,6 @@ logs/
 # Generated outputs
 visualizations/
 sample_generations*.txt
-*.png
 *.pdf
 
 # Cache and temp files
