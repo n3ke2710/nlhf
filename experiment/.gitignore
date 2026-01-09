@@ -45,3 +45,5 @@ sample_generations*.txt
 # HuggingFace cache
 .huggingface/
 transformers_cache/
+
+.env

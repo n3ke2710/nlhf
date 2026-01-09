@@ -1,0 +1,67 @@
+# Models configuration for NLHF Tournament
+# 
+# Supported types:
+#   - openai: OpenAI API models (gpt-4o, gpt-4o-mini, gpt-3.5-turbo)
+#   - anthropic: Anthropic Claude models
+#   - deepinfra: DeepInfra hosted models (Llama, Mistral, etc.)
+#   - local: Local HuggingFace models
+#   - lora: LoRA fine-tuned models
+#   - mock: Mock models for testing
+
+defaults:
+  api_key: ${OPENAI_API_KEY}
+  base_url: https://api.openai.com/v1
+  max_tokens: 100
+  temperature: 0.7
+
+models:
+  # OpenAI models
+  - name: gpt-4o-mini
+    type: openai
+    model_id: gpt-4o-mini
+  
+  - name: gpt-3.5-turbo
+    type: openai
+    model_id: gpt-3.5-turbo
+
+  # Uncomment to add more models:
+  #
+  # - name: gpt-4o
+  #   type: openai
+  #   model_id: gpt-4o
+  #
+  # - name: claude-haiku
+  #   type: anthropic
+  #   model_id: claude-3-haiku-20240307
+  #   api_key: ${ANTHROPIC_API_KEY}
+  #
+  # - name: llama-70b
+  #   type: deepinfra
+  #   model_id: meta-llama/Llama-3.3-70B-Instruct-Turbo
+  #   api_key: ${DEEPINFRA_API_KEY}
+  #   base_url: https://api.deepinfra.com/v1/openai
+  #
+  # Local models (require GPU):
+  #
+  # - name: llama-local
+  #   type: local
+  #   model_path: ~/.tune/models/Llama-3.2-3B/
+  #   quantization: 4bit
+  #
+  # - name: my-lora-v1
+  #   type: lora
+  #   base_model_path: ~/.tune/models/Llama-3.2-3B-Base/
+  #   model_path: ~/.tune/checkpoints/policy_epoch1/
+  #   quantization: 4bit
+  #
+  # Mock models (for testing):
+  #
+  # - name: mock-strong
+  #   type: mock
+  #   strength: 0.9
+  #   style: balanced
+  #
+  # - name: mock-weak
+  #   type: mock
+  #   strength: 0.5
+  #   style: verbose
