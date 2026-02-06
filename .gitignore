@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# OS
+.DS_Store
+
+# Env / secrets
+.env
+.env.*
+
+# Large assets / outputs
+models/
+checkpoints/
+weights/
+data/
+datasets/
+runs/
+outputs/
+logs/
+wandb/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Virtualenvs
+.venv/
+venv/
+
+# Misc
+*.log

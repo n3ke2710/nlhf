@@ -1,0 +1,49 @@
+[project]
+name = "nlhf"
+version = "0.1.0"
+description = "NLHF + RLHF (PPO) tooling"
+readme = "README.md"
+requires-python = ">=3.10"
+
+# Core dependencies for NLHF + RLHF training
+# (Large ML stacks included intentionally)
+dependencies = [
+  "numpy",
+  "pyyaml",
+  "tqdm",
+  "omegaconf",
+  "datasets",
+  "torch",
+  "torchvision",
+  "torchao",
+  "torchtune==0.6.1",
+  "transformers",
+  "peft",
+  "bitsandbytes",
+  "wandb",
+  "openai",
+  "anthropic",
+  "vllm==0.8.5.post1",
+]
+
+[project.optional-dependencies]
+# Dev/test tools
+"dev" = [
+  "pytest",
+  "pytest-cov",
+  "ruff",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 99
+
+[tool.ruff.lint]
+select = ["E", "W", "F"]
+
+[tool.uv]
+# Optional: uv will pick dependencies from [project]
+# This section exists to signal uv usage.
